@@ -109,7 +109,7 @@ def build_conversation(
     # Subsequent rounds
     else:
         if encode_indices_list:
-            print("User selected indices:", encode_indices_list)
+            # print("User selected indices:", encode_indices_list)
             # if multiple mask encode selected by user, mulitple [MASK-ENCODE], [BOX-ENCODE] tokens will be generated
             curr_round = [
                 {
@@ -123,7 +123,7 @@ def build_conversation(
                 },
             ]
         else:
-            print("User did not select.")
+            # print("User did not select.")
             curr_round = [
                 {
                     "from": "human",
@@ -161,7 +161,7 @@ def build_conversation(
 
     # Get single conversation
     input_data = list(train_dataloader)
-    print("len input data:", len(input_data))
+    # print("len input data:", len(input_data))
     inputs = input_data[0]
 
     return inputs
@@ -212,7 +212,7 @@ def inference(
     mask_encode_ref_no_pad = [x for x in mask_encode_ref if x != -1]        # for turns without mask-encode, padded using -1
     # assert (num_rounds - 1) == len(mask_encode_ref)                       # with -1 padding, length should match (not the case for multi-instance encode)
 
-    print("Mask Encode Ref:", mask_encode_ref)
+    # print("Mask Encode Ref:", mask_encode_ref)
 
     mask_encode_count = 0
     bbox_encode_count = 0
@@ -367,7 +367,7 @@ def main():
 
     bnb_model_from_pretrained_args = {}
 
-    print("Loading checkpoint:", model_args.model_name_or_path)
+    # print("Loading checkpoint:", model_args.model_name_or_path)
     if len(model_name.split('/')) == 3:                             # Huggingface expects user_name/repo_name
         model = LlavaLlamaForCausalLM.from_pretrained(
             '/'.join(model_name.split('/')[:2]),
@@ -433,7 +433,7 @@ def main():
         while True:
             round_counter += 1          # 1-indexed
 
-            print("mask encode length:", len(all_mask_encode_torch))
+            # print("mask encode length:", len(all_mask_encode_torch))
 
             if image_file in EXAMPLES:
                 user_inputs = input(
