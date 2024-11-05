@@ -17,8 +17,8 @@ We present SegLLM, a novel multi-round interactive segmentation model that lever
 ## Updates
 - 11/03/2024 Initial commit: release model inference codes and Gradio demo.
 
-## Installation
-See [installation instructions](./INSTALL.md).
+## Installation and Dataset
+See [installation instructions](./INSTALL.md) and [dataset setup instructions](./DATASET.md).
 
 ## Inference
 
@@ -35,6 +35,17 @@ Launch inference via command line:
 CUDA_VISIBLE_DEVICES=0 ./scripts/inference/launch_cli_demo.sh
 ```
 Consider trying the example images and conversations in `inference_images`.
+
+## Evaluation
+
+To evaluate on the following datasets, respectively: multi-round RefCOCO, single-round RefCOCO, single-round RefCOCO with different question templates, multi-round PACO and ReasonSeg:
+```
+LOCAL_HOST=0 ./scripts/eval/eval_mr_refcoco.sh
+LOCAL_HOST=0 ./scripts/eval/eval_refcoco.sh
+LOCAL_HOST=0 ./scripts/eval/eval_refcoco_templates.sh
+LOCAL_HOST=0 ./scripts/eval/eval_mr_paco.sh
+LOCAL_HOST=0 ./scripts/eval/eval_reason_seg.sh
+```
 
 
 ## Citation
