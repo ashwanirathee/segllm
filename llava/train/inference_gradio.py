@@ -45,35 +45,6 @@ from torch.utils.data import DataLoader
 from matplotlib import pyplot as plt
 
 
-'''
-NOTE: for multi-instance mask encoding, mask_encode_ref will be a List (not int)
-      so need to modify handling mask_encode_ref in train.py  
-
-Example:
-    round 1: Segment A
-    round 2: Segment B
-    round 3: [MASK A] [BOX A] Segment C
-    round 4: [MASK B] [BOX B] [MASK C] [BOX C] Segment C
-
-    mask_encode_ref: [-1, 0, 1, 2]
-    round 1 has no encoding (no need to -1 padding)
-    round 2 has no encodings (need -1 padding)
-    round 3 has 1 encoding instance (idx 0)
-    round 4 has 2 encoding instances (idx 1, 2)
-
-    inputs['extra_replacement']['data'][0]: [MASK A] [BOX A] [MASK B] [BOX B] [MASK C] [BOX C]
-    round 1: no encoding
-    round 2: no encidng
-    round 3: [MASK A] [BOX A]
-    round 4: [MASK B] [BOX B] [MASK C] [BOX C]
-
-    >>> len(mask_encode_ref_no_pad) == mask_encode_count 
-    True
-    >>> len(mask_encode_ref_no_pad) == bbox_encode_count 
-    True
-'''
-
-
 pipe = None
 parser = transformers.HfArgumentParser(
         (ModelArguments, DataArguments, TrainingArguments)
@@ -167,10 +138,10 @@ def inference(
         input_image_path,
 ):
     
-    print()
-    print("Input text: ", input_text)
-    print("Input selected mask encode:", user_selected_idx)
-    print("Input Image Path: ", input_image_path)
+    # print()
+    # print("Input text: ", input_text)
+    # print("Input selected mask encode:", user_selected_idx)
+    # print("Input Image Path: ", input_image_path)
     
     # global update_mask_encode_ref    
     global round_counter
@@ -204,7 +175,7 @@ def inference(
     # Subsequent rounds
     else:
         if encode_indices_list:
-            print("User selected indices:", encode_indices_list)
+            # print("User selected indices:", encode_indices_list)
             # if multiple mask encode selected by user, mulitple [MASK-ENCODE], [BOX-ENCODE] tokens will be generated
             curr_round = [
                 {
@@ -358,7 +329,7 @@ def inference(
     # gt_masks = metrics['mask_data']             # during inference, gt_mask will be np.one
 
     # sanity check
-    print("len predicted masks:", len(predicted_masks))          
+    # print("len predicted masks:", len(predicted_masks))          
 
     # crop instance using predicted mask
     # if model_args.segmentator == 'sam':
@@ -409,10 +380,8 @@ def inference(
             data_np = data.detach().cpu().numpy()
             box_encode_data.append(data_np)
 
-    print("Box Encode:")
-    print(box_encode_data)
-
-    # breakpoint()
+    # print("Box Encode:")
+    # print(box_encode_data)
 
     return image_with_mask, all_masked_image, all_masks_cropped, mask_encode_data
 
@@ -463,7 +432,7 @@ with gr.Blocks() as demo:
             text_input = gr.Textbox(label="Input Prompt:", placeholder="Input text")
             # 2)
             with gr.Row():
-                selected_index_text = gr.Textbox(label="Selected output from round (1-indexed):", placeholder="None")       # will be 1-indexed
+                selected_index_text = gr.Textbox(label="Reference instance from round (1-indexed):", placeholder="None")       # will be 1-indexed
                 # deselect_btn = gr.Button("Deselect")]
                 mask_color = gr.Textbox(label="Mask color (RGB):", placeholder="255,0,0")
             # 3)
@@ -478,18 +447,6 @@ with gr.Blocks() as demo:
     # Seg output history
     mask_output_history = gr.Gallery(
         label="Segmentation History", show_label=True, elem_id="mask_output_gallery", 
-        columns=gallery_num_cols, rows=gallery_num_rows, object_fit="fill", height=245
-    )
-
-    # Seg output history (alternative)
-    mask_cropped_history = gr.Gallery(
-        label="Segmentation History (cropped)", show_label=True, elem_id="mask_cropped_gallery", 
-        columns=gallery_num_cols, rows=gallery_num_rows, object_fit="fill", height=245
-    )
-
-    # Mask encode actually passed in (sanity check)
-    mask_encode_per_round = gr.Gallery(
-        label="Mask Encode Data (debug)", show_label=True, elem_id="mask_encode_per_round", 
         columns=gallery_num_cols, rows=gallery_num_rows, object_fit="fill", height=245
     )
 
@@ -508,8 +465,6 @@ with gr.Blocks() as demo:
         outputs=[
             mask_output,                # segmentation output window
             mask_output_history,        # List[]: image with mask
-            mask_cropped_history,       # List[]: cropped instance
-            mask_encode_per_round       # List[]: mask-encode data
         ]
     )
 
@@ -519,8 +474,6 @@ with gr.Blocks() as demo:
         outputs=[
             mask_output,                # segmentation output window
             mask_output_history,        # List[]: image with mask
-            mask_cropped_history,       # List[]: cropped instance
-            mask_encode_per_round       # List[]: mask-encode data
         ]
     )
 
