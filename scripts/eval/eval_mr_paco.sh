@@ -12,7 +12,7 @@ deepspeed \
     llava/train/train_mem.py \
     --deepspeed ./scripts/deepspeed_configs/zero2.json \
     --model_name_or_path liuhaotian/llava-v1.5-7b \
-    --load $CKPT \
+    --load $CHECKPOINT \
     --image_folder ./images_folder \
     --annotation_folder ./annotations_folder \
     --conversation_folder ./conversations_folder/${CONV_DIR} \
