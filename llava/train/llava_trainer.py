@@ -711,6 +711,8 @@ class LLaVATrainer(Trainer):
         # write resuslt string to file
         if out_file := self.data_args.val_results_save_file:
             if (self.args.local_rank == 0 or self.args.local_rank == -1 ):
+                out_dir = os.path.dirname(out_file)
+                os.makedirs(out_dir, exist_ok=True)
                 with open(out_file, "a") as out_file:
                     out_file.write(final_results_str)
         
