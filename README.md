@@ -38,6 +38,10 @@ Consider trying the example images and conversations in `inference_images`.
 
 ## Evaluation
 
+<p align="center"> 
+  <img width="1301" alt="demo" src=./assets/mr_refcoco_table.png align="center" >
+</p>
+
 To evaluate on the following datasets, respectively: multi-round RefCOCO, single-round RefCOCO, single-round RefCOCO with different question templates, multi-round PACO and ReasonSeg:
 ```
 LOCAL_HOST=0 ./scripts/eval/eval_mr_refcoco.sh
