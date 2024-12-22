@@ -749,7 +749,7 @@ class LLaVATrainer(Trainer):
 
         return (loss, outputs) if return_outputs else loss
     
-    def training_step(self, model: nn.Module, inputs: Dict[str, Union[torch.Tensor, Any]]) -> torch.Tensor:
+    def training_step(self, model: nn.Module, inputs: Dict[str, Union[torch.Tensor, Any]], num_items_in_batch=None) -> torch.Tensor:
         """
         Perform a training step on a batch of inputs.
 
@@ -768,8 +768,8 @@ class LLaVATrainer(Trainer):
             `torch.Tensor`: The tensor with training loss on this batch.
         """
         # For debugging stuck:
-        conv_ids = inputs['extra_replacement']['conv_ids']                                          
-        print("Iter:", self.state.global_step, "Rank:", self.args.local_rank, "Conv ids:", conv_ids)
+        # conv_ids = inputs['extra_replacement']['conv_ids']                                          
+        # print("Iter:", self.state.global_step, "Rank:", self.args.local_rank, "Conv ids:", conv_ids)
 
         model.train()
         inputs = self._prepare_inputs(inputs)

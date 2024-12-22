@@ -63,6 +63,7 @@ class ModelArguments:
     mm_use_im_patch_token: bool = field(default=True)
     mm_vision_select_feature: Optional[str] = field(default="projection")
     segmentator: Optional[str] = field(default=None)
+    from_huggingface: bool = field(default=False)
     dev: Optional[str] = field(default=None)
     load: Optional[str] = None
     
@@ -1565,21 +1566,19 @@ def train():
                         model = LlavaLlamaForCausalLM._from_config(cfg)
                     else:
                         model_name = model_args.load or model_args.model_name_or_path
-                        if len(model_name.split('/')) == 3:                             # Huggingface expects user_name/repo_name
+                        if model_args.from_huggingface and len(model_name.split('/')) == 3:                             # Huggingface expects user_name/repo_name
                             model = LlavaLlamaForCausalLM.from_pretrained(
                                 '/'.join(model_name.split('/')[:2]),
                                 subfolder=model_name.split('/')[-1],
                                 cache_dir=training_args.cache_dir,
                                 **bnb_model_from_pretrained_args
                             )
-                        elif len(model_name.split('/')) in [1,2]:
+                        else:
                             model = LlavaLlamaForCausalLM.from_pretrained(
                                 model_name,
                                 cache_dir=training_args.cache_dir,
                                 **bnb_model_from_pretrained_args
                             )
-                        else:
-                            raise ValueError()
             else:
                 model = transformers.LlamaForCausalLM.from_pretrained(
                     model_args.model_name_or_path,
@@ -1612,7 +1611,7 @@ def train():
                 )
             else:
                 model_name = model_args.load or model_args.model_name_or_path
-                if len(model_name.split('/')) == 3: 
+                if model_args.from_huggingface and len(model_name.split('/')) == 3: 
                     tokenizer = transformers.AutoTokenizer.from_pretrained(
                         '/'.join(model_name.split('/')[:2]),
                         subfolder=model_name.split('/')[-1],
