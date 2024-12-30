@@ -15,7 +15,8 @@ We present SegLLM, a novel multi-round interactive segmentation model that lever
 
 
 ## Updates
-- 12/29/2024 Update: release model training codes and datasets.
+- 12/29/2024 Release model training codes and datasets.
+- 11/05/2024 Release model evaluation codes.
 - 11/03/2024 Initial commit: release model inference codes and Gradio demo.
 
 ## Installation and Dataset
