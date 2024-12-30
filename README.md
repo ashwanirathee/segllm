@@ -15,6 +15,7 @@ We present SegLLM, a novel multi-round interactive segmentation model that lever
 
 
 ## Updates
+- 12/29/2024 Update: release model training codes and datasets.
 - 11/03/2024 Initial commit: release model inference codes and Gradio demo.
 
 ## Installation and Dataset
@@ -49,6 +50,14 @@ LOCAL_HOST=0 ./scripts/eval/eval_refcoco.sh
 LOCAL_HOST=0 ./scripts/eval/eval_refcoco_templates.sh
 LOCAL_HOST=0 ./scripts/eval/eval_mr_paco.sh
 LOCAL_HOST=0 ./scripts/eval/eval_reason_seg.sh
+```
+
+## Training
+To reproduce our MR-RefCOCO checkpoint, MR-PACO checkpoint, and all-datasets checkpoint, respectively, run the following commands:
+```
+LOCAL_HOST=0,1,2,3 ./scripts/train/train_mr_refcoco.sh
+LOCAL_HOST=0,1,2,3 ./scripts/train/train_mr_paco.sh
+LOCAL_HOST=0,1,2,3 ./scripts/train/train_all_data_mix.sh
 ```
 
 
