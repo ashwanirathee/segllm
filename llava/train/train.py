@@ -820,7 +820,10 @@ class LazySupervisedDataset(Dataset):
                     self.dataset_lengths.append(len(to_extend))
         elif is_eval:                                     # only load val dataset specified by data_args.val_dataset
             file_name = data_args.val_dataset
-            file_path = os.path.join(data_args.conversation_folder, file_name)
+            conv_dir = data_args.conversation_folder
+            if "all_data_mix_train" in conv_dir:
+                conv_dir = conv_dir.replace("all_data_mix_train", "all_data_mix_val")
+            file_path = os.path.join(conv_dir, file_name)
             print(f" ---- Validation: Loading {file_path.split('/')[-1]} conversations ----")
             with open(file_path, "r") as f:
                 to_extend = json.load(f)
