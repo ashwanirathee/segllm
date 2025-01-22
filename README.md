@@ -9,12 +9,13 @@ We present SegLLM, a novel multi-round interactive segmentation model that lever
 > [**SegLLM: Multi-round Reasoning Segmentation**](http://arxiv.org/abs/2410.18923)            
 > [XuDong Wang*](https://frank-xwang.github.io/), Shaolun Zhang*, [Shufan Li*](https://homepage.jackli.org/), [Konstantinos Kallidromitis](https://tech-ai.panasonic.com/en/researcher_introduction/048/), Kehan Li, Yusuke Kato, Kazuki Kozuka, [Trevor Darrell](https://people.eecs.berkeley.edu/~trevor/)       
 > UC Berkeley, UCLA, Panasonic AI Research, Stanford            
-> Preprint         
+> ICLR 2025         
 
 [[`project page`](https://berkeley-hipie.github.io/segllm.github.io/)] [[`arxiv`](https://arxiv.org/pdf/2410.18923)] [[`bibtex`](#citation)]             
 
 
 ## Updates
+- 01/22/2025 SegLLM was accepted by ICLR 2025!!!
 - 12/29/2024 Release model training codes and datasets.
 - 11/05/2024 Release model evaluation codes.
 - 11/03/2024 Initial commit: release model inference codes and Gradio demo.
