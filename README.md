@@ -11,7 +11,7 @@ We present SegLLM, a novel multi-round interactive segmentation model that lever
 > UC Berkeley, UCLA, Panasonic AI Research, Stanford            
 > ICLR 2025         
 
-[[`project page`](https://berkeley-hipie.github.io/segllm.github.io/)] [[`arxiv`](https://arxiv.org/pdf/2410.18923)] [[`bibtex`](#citation)]             
+[[`project page`](https://berkeley-hipie.github.io/segllm.github.io/)] [[`arxiv`](https://arxiv.org/pdf/2410.18923)] [[`bibtex`](#citation)] [[`Huggingface`](https://huggingface.co/Marlo-Z/SegLLM/tree/main)]          
 
 
 ## Updates
@@ -61,6 +61,10 @@ LOCAL_HOST=0,1,2,3 ./scripts/train/train_mr_refcoco.sh
 LOCAL_HOST=0,1,2,3 ./scripts/train/train_mr_paco.sh
 LOCAL_HOST=0,1,2,3 ./scripts/train/train_all_data_mix.sh
 ```
+
+## Checkpoints
+The model checkpoints are available at [Huggingface](https://huggingface.co/Marlo-Z/SegLLM/tree/main)
+
 
 
 ## Citation
