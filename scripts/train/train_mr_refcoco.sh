@@ -54,4 +54,3 @@ deepspeed \
     --report_to wandb ${@:1} \
     --output_text \
     --do_eval \
-    --dev "test3" \
